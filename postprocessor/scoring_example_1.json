@@ -1,0 +1,9 @@
+{
+  "scoring": [
+    {
+      "points": 10,
+      "each": true,
+      "required": {"tests": ["1..10"]}
+    }
+  ]
+}

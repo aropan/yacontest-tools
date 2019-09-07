@@ -1,0 +1,16 @@
+{
+  "scoring": [
+    {
+      "points": 10,
+      "required": {"tests": ["1..5"]}
+    },
+    {
+      "points": 10,
+      "required": {"tests": ["6..75"]}
+    },
+    {
+      "points": 10,
+      "required": {"tests": ["76..111"]}
+    }
+  ]
+}
