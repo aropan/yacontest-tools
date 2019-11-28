@@ -11,8 +11,10 @@ def main():
         scoring_data = json.load(fd)
 
     important = ['testName', 'verdict', 'message', 'runningTime', 'memoryUsed']
-    tests = [{field: test.get(field) for field in important} for test in test_data if test['testName'] != 'samples']
+    tests = [{field: test.get(field) for field in important} for test in test_data]
+    tests.sort(key=lambda x: int(x['testName'].split('/')[-1]))
     passed = [test['verdict'] == 'ok' for test in tests]
+    seen = [False] * len(tests)
 
     total_points = 0
     for scoring in scoring_data['scoring']:
@@ -30,6 +32,7 @@ def main():
                 raise NotImplementedError('Unknown required_test="%s" format' % required_test)
 
             for t in tests:
+                seen[t - 1] = True
                 if not passed[t - 1]:
                     required_passed = False
                 elif for_each_test:
@@ -37,6 +40,8 @@ def main():
 
         if required_passed and not for_each_test:
             total_points += points
+
+    assert all(seen)
 
     if abs(round(total_points) - total_points) < 1e-9:
         stdout.write('%.0f\n' % total_points)
